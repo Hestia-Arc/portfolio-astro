@@ -1,0 +1,16 @@
+import type { ReactNode } from "react";
+import { Sidebar } from "./Sidebar";
+
+export function PortfolioShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="fixed left-0 top-0 hidden h-screen w-[350px] lg:block">
+        <Sidebar />
+      </div>
+      <div className="lg:hidden">
+        <Sidebar />
+      </div>
+      <main className="lg:ml-[350px]">{children}</main>
+    </div>
+  );
+}

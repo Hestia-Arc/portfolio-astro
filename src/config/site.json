@@ -1,0 +1,90 @@
+{
+  "site": {
+    "url": "https://portfolio-astro-theta-liard.vercel.app",
+    "name": "Esther Portfolio"
+  },
+  "company": {
+    "name": "Afolabi Esther",
+    "logo": "https://cdn.simpleicons.org/astro",
+    "description": "Software Developer",
+    "longDescription": "Creative developer with 3+ years of experience building intuitive web experiences.",
+    "detailedDescription": "I transform complex ideas into elegant, user-centered digital solutions. My approach combines strategic design thinking with technical expertise, ensuring every project delivers both visual impact and seamless functionality. From concept to deployment, I work closely with clients to understand their goals and create solutions that exceed expectations.",
+    "footerText": "Collaborating with innovative companies worldwide to build exceptional digital experiences.",
+    "copyright": "© 2026 Platinum-Hestia. All rights reserved.",
+    "status": {
+      "available": true,
+      "text": "Available for new projects"
+    },
+    "specialties": [
+      "Frontend Development",
+      "Responsive Design",
+      "Design Systems",
+      "Web Applications",
+      "User Experience"
+    ],
+    "technologies": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Figma",
+      "Next.js",
+      "Astro",
+      "Node.js",
+      "GraphQL",
+      "REST APIs",
+      "Git",
+      "Vercel"
+    ]
+  },
+  "contact": {
+    "bookCall": {
+      "text": "Book a call",
+      "url": "/"
+    },
+    "chat": {
+      "text": "Chat",
+      "url": "/"
+    },
+    "email": "starafolab@gmail.com",
+    "linkedin": "https://linkedin.com/in/hestiaarc00",
+    "github": "https://github.com/Hestia-Arc",
+    "twitter": "",
+    "instagram": "",
+    "youtube": "",
+    "behance": "",
+    "medium": ""
+  },
+  "experience": [
+    {
+      "year": "2025 — Present",
+      "company": "Pearldrift",
+      "type": "Frontend Developer",
+      "logo": "https://cdn.simpleicons.org/github",
+      "description": ""
+    },
+    {
+      "year": "2024 — 2025",
+      "company": "Netwares Lab",
+      "type": "Frontend Developer",
+      "logo": "https://cdn.simpleicons.org/github",
+      "description": ""
+    },
+    {
+      "year": "2022 — 2024",
+      "company": "Huygensoft",
+      "type": "Web Developer",
+      "logo": "https://cdn.simpleicons.org/github",
+      "description": ""
+    }
+  ],
+  "projects": {
+    "gridColumns": 1
+  },
+  "testimonials": [
+    {
+      "text": "Esther's attention to detail and technical expertise transformed our vision into a stunning, functional reality.",
+      "author": "Client Name",
+      "company": "Company Name"
+    }
+  ]
+}
