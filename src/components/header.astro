@@ -1,0 +1,44 @@
+---
+import { BookOpen } from "@lucide/astro";
+import siteConfig from "@/config/site.json";
+
+const { contact } = siteConfig;
+
+// Define which social networks to show in header (showing only those with actual URLs)
+const headerSocials = [
+	{ icon: BookOpen, name: "Email", url: contact.email },
+	{ icon: BookOpen, name: "GitHub", url: contact.github },
+	{ icon: BookOpen, name: "LinkedIn", url: contact.linkedin },
+	{ icon: BookOpen, name: "Resume", url: contact.twitter },
+].filter(
+	(social) =>
+		social.url &&
+		social.url !== "" &&
+		social.url !== "#" &&
+		!social.url.includes("placeholder") &&
+		!social.url.includes("example.com"),
+);
+---
+
+<div class="h-[90px] flex items-center justify-between px-30">
+	<div>LOGO</div>
+
+	<div class="flex items-center gap-4">
+		{
+			headerSocials.map((social) => {
+				const IconComponent = social.icon;
+				return (
+					<a
+						href={social.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-foreground/70 uppercase hover:text-foreground transition-colors"
+						aria-label={`Visit ${social.name}`}
+					>
+						{social.name}
+					</a>
+				);
+			})
+		}
+	</div>
+</div>
