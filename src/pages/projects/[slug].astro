@@ -1,0 +1,58 @@
+---
+import { projects, getProject } from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+import ProjectLayout from "@/layouts/ProjectLayout.astro";
+import { Image } from "astro:assets";
+
+const { slug } = Astro.params;
+const project = getProject(slug);
+
+if (!project) {
+  return Astro.redirect("/");
+}
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+---
+
+<ProjectLayout
+  title={`${project.title} | Afolabi Esther`}
+  description={project.summary}
+>
+  <Fragment slot="left-content">
+    <div class="flex flex-col gap-4">
+      <a href="/" class="text-blue-600 hover:text-blue-700">&larr; Back</a>
+      <h1 class="text-3xl font-semibold">{project.title}</h1>
+      <p class="text-gray-500">{project.year} • {project.kind}</p>
+    </div>
+  </Fragment>
+
+  <Fragment slot="right-content">
+    <div class="flex flex-col gap-6">
+      <Image src={project.image} alt={project.title} width={800} height={600} class="w-full rounded-lg" />
+      
+      <div class="flex flex-col gap-4">
+        <p class="text-lg">{project.summary}</p>
+        
+        {project.body.map((paragraph) => (
+          <p class="text-gray-600 leading-relaxed">{paragraph}</p>
+        ))}
+        
+        <div class="mt-4">
+          <p class="font-semibold mb-2">Stack:</p>
+          <div class="flex flex-wrap gap-2">
+            {project.stack.map((tech) => (
+              <span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </Fragment>
+</Layout>

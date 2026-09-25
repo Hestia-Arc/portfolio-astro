@@ -2,13 +2,16 @@
 import ListProjects from "@/components/list-projects.astro";
 import Layout from "../layouts/Layout.astro";
 import siteConfig from "@/config/site.json";
+import { projects } from "@/data/projects";
+import p4 from "@/assets/p4.png";
+
 
 const { company, contact, experience } = siteConfig;
 
 import { Image } from "astro:assets";
 import { Button } from "@/components/ui/button";
 
-const btnstyle = "h-full flex-1 border border-right-1 font-semibold py-2 px-4  hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out";
+const btnstyle = "h-full flex-1 flex justify-center items-center border border-right-1 font-semibold py-2 px-4  hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out";
 ---
 
 <Layout
@@ -22,32 +25,31 @@ const btnstyle = "h-full flex-1 border border-right-1 font-semibold py-2 px-4  h
 
 <Fragment slot="projects">
     <div class="flex flex-row h-full">
-      <button class={btnstyle}>
-        01
-      </button>
-       <button class={btnstyle}>
-        02
-      </button>
-       <button class={btnstyle}>
-        03
-      </button>
-       <button class={btnstyle}>
-        04
-      </button>
-       <button class={btnstyle}>
-        05
-      </button>
+      {projects.map((project, index) => (
+        <a href={`/projects/${project.slug}`} class={`${btnstyle} text-center no-underline`}>
+          {String(index + 1)}
+        </a>
+      ))}
     </div>
   </Fragment>
 
   <Fragment slot="left-content">
-    <ListProjects />
+    <Image
+          src={p4}
+          alt={company.name}
+          width={800}
+          height={600}
+          class="h-full w-full object-cover"
+          loading="eager"
+        />
+
+    <!-- <ListProjects /> -->
   </Fragment>
 
   <Fragment slot="right-content">
     <div class="flex w-full flex-col gap-6">
       <!-- <Image
-          src={company.logo}
+          src={p4}
           alt={company.name}
           width="32"
           height="32"
@@ -89,5 +91,3 @@ const btnstyle = "h-full flex-1 border border-right-1 font-semibold py-2 px-4  h
     <ListProjects />
   </Fragment> -->
 </Layout>
-
-<!-- // <ListProjects /> -->

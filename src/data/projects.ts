@@ -1,14 +1,15 @@
-import p1 from "@/assets/project-1.jpg";
-import p2 from "@/assets/project-2.jpg";
-import p3 from "@/assets/project-3.jpg";
-import p4 from "@/assets/project-4.jpg";
+import type { ImageMetadata } from "astro";
+import p1 from "@/assets/p1.png";
+import p2 from "@/assets/p2.png";
+import p3 from "@/assets/p3.png";
+import p4 from "@/assets/p4.png";
 
 export type Project = {
   slug: string;
   title: string;
   year: string;
   kind: string;
-  image: string;
+  image: ImageMetadata;
   summary: string;
   body: string[];
   stack: string[];
@@ -60,6 +61,36 @@ export const projects: Project[] = [
       "Photography was shot in a single afternoon with one light source and no retouching beyond dust removal.",
     ],
     stack: ["Art Direction", "Print", "Photography", "Web"],
+  },
+  {
+    slug: "kinetic-type",
+    title: "Kinetic Type",
+    year: "2024",
+    kind: "Experiment",
+    image: p4,
+    summary:
+      "An ongoing study in motion typography — thirty short loops, one rule each.",
+    body: [
+      "Every loop starts with a constraint: one axis, one easing curve, one word. The restriction is the whole point; it forces invention where there'd otherwise be decoration.",
+      "The output feeds directly back into client work. Several of the transitions in this portfolio began as entries in this series.",
+      "Rendered in the browser, no video files — each loop is a few hundred bytes of transform math.",
+    ],
+    stack: ["Canvas", "CSS Transforms", "Variable Fonts"],
+  },
+  {
+    slug: "kinetic-type",
+    title: "Kinetic Type",
+    year: "2024",
+    kind: "Experiment",
+    image: p4,
+    summary:
+      "An ongoing study in motion typography — thirty short loops, one rule each.",
+    body: [
+      "Every loop starts with a constraint: one axis, one easing curve, one word. The restriction is the whole point; it forces invention where there'd otherwise be decoration.",
+      "The output feeds directly back into client work. Several of the transitions in this portfolio began as entries in this series.",
+      "Rendered in the browser, no video files — each loop is a few hundred bytes of transform math.",
+    ],
+    stack: ["Canvas", "CSS Transforms", "Variable Fonts"],
   },
   {
     slug: "kinetic-type",
