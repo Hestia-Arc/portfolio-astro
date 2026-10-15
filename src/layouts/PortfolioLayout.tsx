@@ -144,7 +144,7 @@ export function PortfolioShell() {
           <Mail className="h-6 w-6 text-primary-strong" />
           <DialogTitle className="text-2xl">Let’s build something meaningful.</DialogTitle>
           <DialogDescription className="leading-relaxed">Esther’s contact details and social profiles will be available here soon.</DialogDescription>
-          <div className="flex items-center gap-5 text-muted-foreground"><LuGithub aria-label="GitHub" /><LuLinkedin aria-label="LinkedIn" /><RiTwitterXLine aria-label="Twitter" /></div>
+          <div className="flex items-center gap-5 text-muted-foreground social-row"><LuGithub aria-label="GitHub" /><LuLinkedin aria-label="LinkedIn" /><RiTwitterXLine aria-label="Twitter" /></div>
         </DialogContent>
       </Dialog>
     </div>
