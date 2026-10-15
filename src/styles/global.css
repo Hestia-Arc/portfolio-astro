@@ -116,6 +116,41 @@ h1 span { color: var(--primary-strong); }
 .work-section { margin-top: 15px; flex-shrink: 0; position: relative; }
 .section-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .section-heading h2 { font: 10px var(--font-mono); text-transform: uppercase; color: var(--muted-foreground); margin: 0; }
+.section-heading-select {
+  font: 10px var(--font-mono);
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  background: transparent;
+  border: none;
+  padding: 0 20px 0 0;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+.section-heading-select::-ms-expand { display: none; }
+.section-heading-select option {
+  background: var(--card);
+  color: var(--foreground);
+  font: 10px var(--font-mono);
+}
+.section-heading-select:focus,
+.section-heading-select:active,
+.section-heading-select:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.section-heading-select:focus,
+.section-heading-select:active,
+.section-heading-select:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.select-wrap { position: relative; display: inline-flex; align-items: center; }
+.section-heading .select-wrap { margin-right: 12px; }
+.section-heading-select { padding-right: 20px; }
+.select-icon { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; color: var(--muted-foreground); pointer-events: none; }
 .section-heading span { font: 10px var(--font-mono); color: var(--muted-foreground); }
 .project-navigation { display: flex; align-items: center; gap: 6px; }
 .project-navigation > span { margin-right: 5px; }
@@ -160,7 +195,7 @@ h1 span { color: var(--primary-strong); }
 .project-title svg { width: 13px; height: 13px; color: var(--muted-foreground); }
 .project-type { display: none; }
 .site-footer { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 16px; align-items: center; padding: 10px 5%; font: 10px var(--font-mono); color: var(--muted-foreground); }
-.footer-socials { display: flex; align-items: center; gap: 6px; }
+.footer-socials { display: flex; align-items: center; justify-content: space-between; gap: 0; min-width: 140px; }
 .footer-socials button { width: 30px; height: 30px; }
 .footer-socials svg { width: 16px; height: 16px; }
 .footer-note { display: flex; align-items: center; gap: 8px; }

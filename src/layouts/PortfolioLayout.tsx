@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Icon, Mail, Moon, Sun } from "lucide-react";
-import { SiGithub, SiLinkerd, SiX } from "react-icons/si";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Icon, Mail, Moon, Sun, ChevronDown } from "lucide-react";
+import { LuLinkedin, LuGithub } from "react-icons/lu";
+import { RiTwitterXLine } from "react-icons/ri";
+
 
 import { Button } from "@/components/ui/button";
 import { BinaryGlobe } from "@/components/portfolio/binary-globe";
 import { ProjectArt } from "@/components/portfolio/project-art";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
-
-const projects = [
-  { name: "Flow", kind: "flow" as const, type: "Workflow management", description: "A concept for a focused workspace that brings tasks, teams, and progress together. Kanban boards turn complex workflows into clear, manageable steps.", tech: ["React", "TypeScript", "Tailwind CSS"] },
-  { name: "Pulse", kind: "pulse" as const, type: "Analytics dashboard", description: "A concept for turning business data into a clear picture. A considered dashboard brings key metrics and trends together to support informed decisions.", tech: ["React", "TypeScript", "Data visualization"] },
-  { name: "Formly", kind: "form" as const, type: "Interactive form builder", description: "A concept for creating forms that feel effortless. A simple builder pairs flexible fields with a clean, accessible experience for the people filling them out.", tech: ["React", "TypeScript", "Form validation"] },
-  { name: "Gather", kind: "flow" as const, type: "Community platform", description: "A concept for bringing people and shared interests together in a thoughtful community space.", tech: ["React", "TypeScript", "Accessible UI"] },
-  { name: "Ledger", kind: "pulse" as const, type: "Personal finance", description: "A concept for making everyday finances easier to understand, with a clear view of spending and savings.", tech: ["React", "TypeScript", "Charts"] },
-  { name: "Nomad", kind: "form" as const, type: "Travel planning", description: "A concept for organizing destinations, itineraries, and the small details of a great trip.", tech: ["React", "TypeScript", "Responsive design"] },
-];
+import { projects } from "@/data/projects";
 
 export function PortfolioShell() {
   const [dark, setDark] = useState(true);
   const [selected, setSelected] = useState<(typeof projects)[number] | null>(null);
   const [contactOpen, setContactOpen] = useState(false);
   const [projectPage, setProjectPage] = useState(0);
-  const visibleProjects = projects.slice(projectPage * 3, projectPage * 3 + 3);
+  const [category, setCategory] = useState<"all" | "websites" | "web-apps" | "wordpress">("all");
+  const pageSize = 3;
+  const filteredProjects = category === "all" ? projects : projects.filter(p => p.category === category);
+  const totalPages = Math.max(1, Math.ceil(filteredProjects.length / pageSize));
+  const visibleProjects = filteredProjects.slice(projectPage * pageSize, projectPage * pageSize + pageSize);
+  const rangeStart = projectPage * pageSize + 1;
+  const rangeEnd = Math.min((projectPage + 1) * pageSize, filteredProjects.length);
+  const selectedIndex = selected ? filteredProjects.indexOf(selected) : -1;
   const reduced = useReducedMotion();
   const transition = reduced ? { duration: 0 } : { type: "spring" as const, stiffness: 210, damping: 27 };
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
@@ -54,7 +55,7 @@ export function PortfolioShell() {
                   </div>
                   <Button variant="default" className="contact-button" onClick={() => setContactOpen(true)}>Let’s connect <ArrowUpRight /></Button>
                 </motion.div> : <motion.article key={selected.name} className="case-study" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: reduced ? 0 : -20 }} transition={{ duration: reduced ? 0 : .25 }} aria-label={`${selected.name} case study`}>
-                  <div className="case-toolbar"><Button variant="ghost" size="sm" onClick={() => setSelected(null)}><ArrowLeft /> All projects</Button><span className="eyebrow">CONCEPT CASE STUDY / 0{projects.indexOf(selected) + 1}</span></div>
+                  <div className="case-toolbar"><Button variant="ghost" size="sm" onClick={() => setSelected(null)}><ArrowLeft /> All projects</Button><span className="eyebrow">CONCEPT CASE STUDY / {String(selectedIndex + 1).padStart(2, "0")}</span></div>
                   <motion.div layoutId={`project-art-${selected.name}`} transition={transition} className="case-art"><ProjectArt kind={selected.kind} /></motion.div>
                   <motion.div initial={{ opacity: 0, y: reduced ? 0 : 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduced ? 0 : .18, duration: reduced ? 0 : .35 }}>
                     <div className="case-heading"><h2>{selected.name}<span>.</span></h2><span>{selected.type}</span></div>
@@ -68,25 +69,82 @@ export function PortfolioShell() {
               </AnimatePresence>
             </div>
             <section className="work-section" aria-label="Selected projects">
-              <div className="section-heading"><h2>Selected work</h2><div className="project-navigation"><span aria-live="polite">{projectPage === 0 ? "01 — 03" : "04 — 06"} / 06</span><Button variant="ghost" size="icon" disabled={projectPage === 0} onClick={() => setProjectPage(0)} aria-label="Previous projects" title="Previous projects"><ArrowLeft /></Button><Button variant="ghost" size="icon" disabled={projectPage === 1} onClick={() => setProjectPage(1)} aria-label="More projects" title="More projects"><ArrowRight /></Button></div></div>
-              <div className="project-grid">{visibleProjects.map((project, index) => <motion.div key={project.name} className={`project-slot ${selected?.name === project.name ? "selected-slot" : ""}`} layout transition={transition}>
-                <Button variant="project" onClick={() => { setSelected(project); const stage = document.querySelector(".content-stage"); stage?.scrollTo({ top: 0 }); }} aria-label={`View ${project.name} case study`} aria-pressed={selected?.name === project.name}>
-                  {selected?.name !== project.name ? <motion.div layoutId={`project-art-${project.name}`} transition={transition}><ProjectArt kind={project.kind} /></motion.div> : <div className={`project-art art-${project.kind} selected-art`}><ArrowUpRight /></div>}
-                  <div className="project-info"><div className="project-title">{project.name}<ArrowUpRight /></div><div className="project-type">{project.type}</div><span className="project-number">0{projectPage * 3 + index + 1}</span></div>
-                </Button>
-              </motion.div>)}</div>
+              <div className="section-heading">
+                <div className="select-wrap">
+                  <select
+                    id="project-category"
+                    value={category}
+                    onChange={(e) => { setCategory(e.target.value as any); setProjectPage(0); setSelected(null); }}
+                    className="section-heading-select"
+                    aria-label="Filter projects by category"
+                  >
+                    <option value="all">Selected work — All</option>
+                    <option value="websites">Selected work — Websites</option>
+                    <option value="web-apps">Selected work — Web apps</option>
+                    <option value="wordpress">Selected work — WordPress</option>
+                  </select>
+                  <ChevronDown className="select-icon" />
+                </div>
+                <div className="project-navigation">
+                  <span aria-live="polite">{String(rangeStart).padStart(2, "0")} — {String(rangeEnd).padStart(2, "0")} / {String(filteredProjects.length).padStart(2, "0")}</span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    disabled={projectPage === 0}
+                    onClick={() => setProjectPage(p => Math.max(0, p - 1))}
+                    aria-label="Previous projects"
+                    title="Previous projects"
+                  ><ArrowLeft /></Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    disabled={projectPage >= totalPages - 1}
+                    onClick={() => setProjectPage(p => Math.min(totalPages - 1, p + 1))}
+                    aria-label="More projects"
+                    title="More projects"
+                  ><ArrowRight /></Button>
+                </div>
+              </div>
+              <div className="project-grid">
+                {visibleProjects.map((project, index) => {
+                  const globalIndex = projectPage * pageSize + index; // 0-based across full list
+                  const offsetY = globalIndex * 5; // match previous nth-child offsets (0,5,10,...)
+                  return (
+                    <motion.div
+                      key={project.name}
+                      className={`project-slot ${selected?.name === project.name ? "selected-slot" : ""}`}
+                      layout
+                      transition={transition}
+                      style={{ transform: `translateY(${offsetY}px)` }}
+                    >
+                      <Button
+                        variant="project"
+                        onClick={() => { setSelected(project); const stage = document.querySelector(".content-stage"); stage?.scrollTo({ top: 0 }); }}
+                        aria-label={`View ${project.name} case study`}
+                        aria-pressed={selected?.name === project.name}
+                      >
+                        {selected?.name !== project.name ? <motion.div layoutId={`project-art-${project.name}`} transition={transition}><ProjectArt kind={project.kind} /></motion.div> : <div className={`project-art art-${project.kind} selected-art`}><ArrowUpRight /></div>}
+                        <div className="project-info"><div className="project-title">{project.name}<ArrowUpRight /></div><div className="project-type">{project.type}</div><span className="project-number">{String(projectPage * pageSize + index + 1).padStart(2, "0")}</span></div>
+                      </Button>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </section>
           </section>
         </LayoutGroup>
       </main>
-      <footer className="site-footer"><span>© 2026 AFOLABI ESTHER</span><div className="footer-socials" aria-label="Social contacts">{[{ name: "Email", Icon: Mail }, { name: "LinkedIn", Icon: SiLinkerd }, { name: "GitHub", Icon: SiGithub }, { name: "Twitter", Icon: SiX }].map(({ name, Icon }) => <Button key={name} variant="ghost" size="icon" onClick={() => setContactOpen(true)} aria-label={name} title={`${name} — contact details coming soon`}><Icon /></Button>)}</div></footer>
+      <footer className="site-footer">
+        <span>© 2026 AFOLABI ESTHER</span>
+        <div className="footer-socials" aria-label="Social contacts">{[{ name: "Email", Icon: Mail, link: "mailto:starafolab@gmail.com" }, { name: "LinkedIn", Icon: LuLinkedin, link: "https://www.linkedin.com/in/hestiaarc00/" }, { name: "GitHub", Icon: LuGithub, link: "https://github.com/Hestia-Arc" }, { name: "Twitter", Icon: RiTwitterXLine, link: "https://x.com/arc_hestia00" }].map(({ name, Icon, link }) => <a href={link} key={name} onClick={() => setContactOpen(true)} aria-label={name} title={`${name} — Let's build`}><Icon /></a>)}</div>
+      </footer>
       <Dialog open={contactOpen} onOpenChange={setContactOpen}>
         <DialogContent className="project-dialog">
-        <Mail className="h-6 w-6 text-primary-strong" />
-        <DialogTitle className="text-2xl">Let’s build something meaningful.</DialogTitle>
-        <DialogDescription className="leading-relaxed">Esther’s contact details and social profiles will be available here soon.</DialogDescription>
-        <div className="flex items-center gap-5 text-muted-foreground"><SiGithub aria-label="GitHub" /><SiLinkerd aria-label="LinkedIn" /><SiX aria-label="Twitter" /></div>
-      </DialogContent></Dialog>
+          <Mail className="h-6 w-6 text-primary-strong" />
+          <DialogTitle className="text-2xl">Let’s build something meaningful.</DialogTitle>
+          <DialogDescription className="leading-relaxed">Esther’s contact details and social profiles will be available here soon.</DialogDescription>
+          <div className="flex items-center gap-5 text-muted-foreground"><LuGithub aria-label="GitHub" /><LuLinkedin aria-label="LinkedIn" /><RiTwitterXLine aria-label="Twitter" /></div>
+        </DialogContent></Dialog>
     </div>
   );
 }
