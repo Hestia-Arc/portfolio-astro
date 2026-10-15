@@ -1,5 +1,4 @@
 ---
-import ListProjects from "@/components/list-projects.astro";
 import Layout from "../layouts/Layout.astro";
 import siteConfig from "@/config/site.json";
 import { projects } from "@/data/projects";
@@ -9,7 +8,6 @@ import p4 from "@/assets/p4.png";
 const { company, contact, experience } = siteConfig;
 
 import { Image } from "astro:assets";
-import { Button } from "@/components/ui/button";
 
 const btnstyle = "h-full flex-1 flex justify-center items-center border border-right-1 font-semibold py-2 px-4  hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out";
 ---
