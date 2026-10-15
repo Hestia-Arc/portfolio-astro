@@ -2,8 +2,9 @@
 import "@/styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import Head from "@/components/head.astro";
-import Header from "@/components/header.astro";
-import siteConfig from "@/config/site.json";
+// import Header from "@/components/header.astro";
+// import siteConfig from "@/config/site.json";
+import { PortfolioShell } from "@/layouts/PortfolioLayout.tsx";
 
 // Extend the Props interface to include all head options
 interface Props {
@@ -34,7 +35,7 @@ interface Props {
 
 const { ...props } = Astro.props;
 
-const { company, contact } = siteConfig;
+// const { company, contact } = siteConfig;
 ---
 
 <!doctype html>
@@ -46,56 +47,6 @@ const { company, contact } = siteConfig;
 	<body
 		class="flex h-screen w-full flex-col font-medium leading-snug tracking-tight antialiased"
 	>
-		<!-- Header -->
-		<Header />
-
-		<!-- Main content wrapper -->
-		<main
-			class="relative flex flex-1 flex-col px-30 h-screen w-full overflow-hidden"
-		>
-			<div class="absolute bottom-0 right-0 w-1/2 h-[280px] bg-[#fff]">
-				<slot name="projects" />
-			</div>
-
-			<div class="flex flex-1 bg-[#ececec]">
-				<!-- Left section -->
-				<div class="flex flex-1 flex-col bg-blue-100 w-full">
-					<slot name="left-content" />
-				</div>
-				<!-- Right section -->
-				<div class="flex flex-1 flex-col gap-2 px-25 pt-25">
-					<slot name="right-content" />
-				</div>
-			</div>
-		</main>
-
-		<!-- Mobile footer - positioned at bottom of page -->
-		<!-- <footer
-			class="lg:hidden w-full py-8 px-4 border-t border-gray-200 mt-auto"
-		>
-			<div class="w-full flex flex-col gap-4">
-				Social Links
-				<div class="flex items-center gap-4 mb-4">
-					{
-						footerSocials.map((social) => {
-							const IconComponent = social.icon;
-							return (
-								<a
-									href={social.url}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="text-foreground/70 hover:text-foreground transition-colors"
-									aria-label={`Visit ${social.name}`}
-								>
-									<IconComponent class="w-5 h-5" />
-								</a>
-							);
-						})
-					}
-				</div>
-				<p class="text-xs text-foreground/70">{company.footerText}</p>
-				<p class="text-xs text-foreground/70">{company.copyright}</p>
-			</div>
-		</footer> -->
+		<PortfolioShell client:load />
 	</body>
 </html>
