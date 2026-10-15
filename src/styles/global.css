@@ -113,6 +113,20 @@ h1 span { color: var(--primary-strong); }
 .introduction p { margin: 0 0 12px; }
 .introduction strong { color: var(--foreground); font-weight: 500; }
 .contact-button { align-self: flex-start; margin-top: 14px; height: 42px; border-radius: 5px; font-size: 12px; padding: 0 18px; }
+/* Ensure contact button has visible background and good contrast */
+.contact-button {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: 1px solid transparent;
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--primary) 12%, transparent);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.contact-button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px color-mix(in oklab, var(--primary) 14%, transparent); }
+.contact-button:active { transform: translateY(0); }
+
+/* Ensure icon and text inside the contact button are vertically aligned */
+.contact-button { display: inline-flex; align-items: center; gap: 8px; }
+.contact-button svg { width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
 .work-section { margin-top: 15px; flex-shrink: 0; position: relative; }
 .section-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .section-heading h2 { font: 10px var(--font-mono); text-transform: uppercase; color: var(--muted-foreground); margin: 0; }

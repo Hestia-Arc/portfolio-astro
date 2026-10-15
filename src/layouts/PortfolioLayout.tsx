@@ -27,6 +27,7 @@ export function PortfolioShell() {
   const reduced = useReducedMotion();
   const transition = reduced ? { duration: 0 } : { type: "spring" as const, stiffness: 210, damping: 27 };
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
+  useEffect(() => { console.debug("contactOpen ->", contactOpen); }, [contactOpen]);
   useEffect(() => {
     if (!selected) return;
     const handleKey = (event: KeyboardEvent) => { if (event.key === "Escape") setSelected(null); };
@@ -53,7 +54,7 @@ export function PortfolioShell() {
                     <p>I’m a software engineer interested in the intersection of <strong>technology, business, and problem-solving.</strong></p>
                     <p>I model real-world workflows, simplify complex ideas, and build thoughtful digital experiences that make things work better.</p>
                   </div>
-                  <Button variant="default" className="contact-button" onClick={() => setContactOpen(true)}>Let’s connect <ArrowUpRight /></Button>
+                  <Button variant="default" className="contact-button bg-primary text-primary-foreground" onClick={() => { console.debug('contact button clicked'); setContactOpen(true); }}>Let’s connect <ArrowUpRight /></Button>
                 </motion.div> : <motion.article key={selected.name} className="case-study" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: reduced ? 0 : -20 }} transition={{ duration: reduced ? 0 : .25 }} aria-label={`${selected.name} case study`}>
                   <div className="case-toolbar"><Button variant="ghost" size="sm" onClick={() => setSelected(null)}><ArrowLeft /> All projects</Button><span className="eyebrow">CONCEPT CASE STUDY / {String(selectedIndex + 1).padStart(2, "0")}</span></div>
                   <motion.div layoutId={`project-art-${selected.name}`} transition={transition} className="case-art"><ProjectArt kind={selected.kind} /></motion.div>
@@ -144,7 +145,8 @@ export function PortfolioShell() {
           <DialogTitle className="text-2xl">Let’s build something meaningful.</DialogTitle>
           <DialogDescription className="leading-relaxed">Esther’s contact details and social profiles will be available here soon.</DialogDescription>
           <div className="flex items-center gap-5 text-muted-foreground"><LuGithub aria-label="GitHub" /><LuLinkedin aria-label="LinkedIn" /><RiTwitterXLine aria-label="Twitter" /></div>
-        </DialogContent></Dialog>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
